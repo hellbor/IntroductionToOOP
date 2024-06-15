@@ -165,5 +165,4 @@ void main()
 
 	Fraction F = B - A;
 	F.print();
-
 }
