@@ -255,5 +255,4 @@ void main()
 
 	Fraction B;
 	cin >> B;
-	//cout << "Дробное число: " << B << endl;
 }
