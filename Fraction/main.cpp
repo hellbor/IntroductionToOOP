@@ -198,6 +198,16 @@ bool operator<=(const Fraction& left, const Fraction& right)
 {
 	return !(left > right);
 }
+std::ostream& operator<<(std::ostream& os, const Fraction& obj)
+{
+	return os << obj.get_numerator() << "/" << obj.get_denominator();
+}
+std::istream& operator>>(std::istream& is, const Fraction& obj)
+{
+	cout << "Введите числитель: " << endl;
+	cout << "Введите знаменатель: " << endl;
+	return is;
+}
 
 
 //#define CONSTRUCTORS_CHECK
@@ -238,6 +248,12 @@ void main()
 	A.print();
 #endif // ARITHMETICAL_OPERATORS_CHECK
 
-	cout << (Fraction(1, 3) <= Fraction(5, 11)) << endl;
+	//cout << (Fraction(1, 2) == Fraction(5, 10)) << endl;
 
+	Fraction A(3, 5);
+	cout << A << endl;
+
+	Fraction B;
+	cin >> B;
+	//cout << "Дробное число: " << B << endl;
 }
