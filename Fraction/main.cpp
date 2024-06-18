@@ -1,4 +1,5 @@
-﻿#include<iostream>
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
 using namespace std;
 using std::cin;
 using std::cout;
@@ -200,12 +201,45 @@ bool operator<=(const Fraction& left, const Fraction& right)
 }
 std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 {
-	return os << obj.get_numerator() << "/" << obj.get_denominator();
+	{
+		if (obj.get_integer())os << obj.get_integer();
+		if (obj.get_numerator())
+		{
+			if (obj.get_integer())os << "(";
+			cout << obj.get_numerator() << "/" << obj.get_denominator();
+			if (obj.get_integer())os << ")";
+		}
+		else if (obj.get_integer() == 0)os << 0;
+		cout << endl;
+	}
+	return os;
 }
-std::istream& operator>>(std::istream& is, const Fraction& obj)
+std::istream& operator>>(std::istream& is, Fraction& obj)
 {
-	cout << "Введите числитель: " << endl;
-	cout << "Введите знаменатель: " << endl;
+	/*int integer, numerator, denominator;
+	is >> integer >> numerator >> denominator;
+	obj = Fraction(integer, numerator, denominator);*/
+
+	const int SIZE = 256;
+	char buffer[SIZE] = {};
+	//is >> buffer;
+	is.getline(buffer, SIZE);
+
+	int numbers[3] = {};
+	int n = 0;
+	const char delimiters[] = " /()";
+	for (char* pch = strtok(buffer, delimiters); pch; pch = strtok(NULL, delimiters))
+		numbers[n++] = atoi(pch);	//Функция atoi() принимает строку и возвращает целочисленный
+									//аналог этой строки, т.е. строку преобразует в число
+	//for (int i = 0; i < n; i++)cout << numbers[i] << "\t"; cout << endl;
+
+	switch (n)
+	{
+	case 1:obj = Fraction(numbers[0]); break;
+	case 2:obj = Fraction(numbers[0], numbers[1]); break;
+	case 3:obj = Fraction(numbers[0], numbers[1], numbers[2]); break;
+	}
+
 	return is;
 }
 
@@ -254,5 +288,7 @@ void main()
 	cout << A << endl;
 
 	Fraction B;
+	cout << "Введите простую дробь: "; cin >> B;
+	cout << B << endl;
 	cin >> B;
 }
