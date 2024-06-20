@@ -55,7 +55,6 @@ public:
 	{
 		integer = (int)decimal;
 		decimal = decimal - integer;
-		//value -= integer;
 		denominator = 100;
 		numerator = decimal * denominator;
 		reduce ();
