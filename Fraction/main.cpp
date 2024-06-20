@@ -51,12 +51,13 @@ public:
 		set_denominator(1);
 		cout << "DefaultConstructor:\t" << this << endl;
 	}
-	explicit Fraction(double value)
+	explicit Fraction(double decimal)
 	{
-		integer = (int)value;
-		value = value - integer;
+		integer = (int)decimal;
+		decimal = decimal - integer;
+		//value -= integer;
 		denominator = 100;
-		numerator = value * denominator;
+		numerator = decimal * denominator;
 		reduce ();
 		cout << "SingleArgumentConstructor:\t" << this << endl;
 	}
