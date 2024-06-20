@@ -5,6 +5,8 @@ using std::cin;
 using std::cout;
 using std::endl;
 
+#define delimiter "\n------------------------------------\n"
+
 class Fraction;
 Fraction operator*(Fraction left, Fraction right);
 Fraction operator/(const Fraction& left, const Fraction& right);
@@ -49,12 +51,14 @@ public:
 		set_denominator(1);
 		cout << "DefaultConstructor:\t" << this << endl;
 	}
-	Fraction(int integer)
+	explicit Fraction(double value)
 	{
-		this->integer = integer;
-		this->numerator = 0;
-		set_denominator(1);
-		cout << "SingleArgumentConstructor:" << this << endl;
+		integer = (int)value;
+		value -= integer;
+		denominator = 100;
+		numerator = value * denominator;
+		reduce ();
+		cout << "SingleArgumentConstructor:\t" << this << endl;
 	}
 	Fraction(int numerator, int denominator)
 	{
@@ -70,12 +74,32 @@ public:
 		set_denominator(denominator);
 		cout << "Constructor:\t\t" << this << endl;
 	}
+	Fraction(const Fraction& other)
+	{
+		this->integer = other.integer;
+		this->numerator = other.numerator;
+		this->denominator = other.denominator;
+		cout << "CopyConstructor:\t" << this << endl;
+	}
 	~Fraction()
 	{
 		cout << "Destructor:\t\t" << this << endl;
 	}
 
 	//				Operators:
+	
+	/*operator double()
+	{
+		
+	}*/
+	Fraction& operator=(const Fraction& other)
+	{
+		this->integer = other.integer;
+		this->numerator = other.numerator;
+		this->denominator = other.denominator;
+		cout << "CopyAssignment:\t\t" << this << endl;
+		return *this;
+	}
 	Fraction& operator*=(Fraction& other)
 	{
 		return *this = *this * other;
@@ -200,19 +224,16 @@ bool operator<=(const Fraction& left, const Fraction& right)
 	return !(left > right);
 }
 std::ostream& operator<<(std::ostream& os, const Fraction& obj)
-{
 	{
 		if (obj.get_integer())os << obj.get_integer();
 		if (obj.get_numerator())
 		{
 			if (obj.get_integer())os << "(";
-			cout << obj.get_numerator() << "/" << obj.get_denominator();
+			os << obj.get_numerator() << "/" << obj.get_denominator();
 			if (obj.get_integer())os << ")";
 		}
 		else if (obj.get_integer() == 0)os << 0;
-		cout << endl;
-	}
-	return os;
+		return os;
 }
 std::istream& operator>>(std::istream& is, Fraction& obj)
 {
@@ -246,6 +267,10 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 
 //#define CONSTRUCTORS_CHECK
 //#define ARITHMETICAL_OPERATORS_CHECK
+//#define COMPARISON_OPERATORS
+//#define IOSTREAM_CHECK
+//#define CONVERSIONS_FROM_OTHER_TO_CLASS
+#define CONVERSIONS_HOME_WORK
 
 void main()
 {
@@ -282,8 +307,18 @@ void main()
 	A.print();
 #endif // ARITHMETICAL_OPERATORS_CHECK
 
-	//cout << (Fraction(1, 2) == Fraction(5, 10)) << endl;
+#ifdef COMPARISON_OPERATORS
 
+	cout << (Fraction(1, 2) == Fraction(5, 10)) << endl;
+	//cout << (Fraction(1, 2) != Fraction(5, 10)) << endl;
+	//cout << (Fraction(1, 2) > Fraction(5, 10)) << endl;
+	//cout << (Fraction(1, 2) < Fraction(5, 10)) << endl;
+	//cout << (Fraction(1, 2) >= Fraction(5, 10)) << endl;
+	//cout << (Fraction(1, 2) <= Fraction(5, 10)) << endl;
+
+#endif // COMPARISON_OPERATORS
+
+#ifdef IOSTREAM_CHECK
 	Fraction A(3, 5);
 	cout << A << endl;
 
@@ -291,4 +326,28 @@ void main()
 	cout << "Введите простую дробь: "; cin >> B;
 	cout << B << endl;
 	cin >> B;
+#endif // IOSTREAM_CHECK
+
+#ifdef CONVERSIONS_FROM_OTHER_TO_CLASS
+	Fraction A = (Fraction)5;	//Conversion from less to more (from 'int' to 'Fraction')
+					//Single-argument constructor
+	cout << A << endl;
+
+	cout << delimiter << endl;
+
+	Fraction B;	//Default constructor
+	cout << delimiter << endl;
+	B = Fraction(8);		//Conversion from less to more (from 'int' to 'Fraction')
+	//CopyAssignment
+	cout << delimiter << endl;
+	cout << B << endl;
+
+	cout << delimiter << endl;
+#endif // CONVERSIONS_FROM_OTHER_TO_CLASS
+
+#ifdef CONVERSIONS_HOME_WORK
+	Fraction A = (Fraction)2.75;
+	cout << A << endl;
+#endif // CONVERSIONS_HOME_WORK
+
 }
