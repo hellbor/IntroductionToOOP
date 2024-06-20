@@ -53,10 +53,11 @@ public:
 	}
 	Fraction(double decimal)
 	{
+		//decimal += 1e-10;
 		integer = decimal;
 		decimal -= integer;
 		denominator = 1e+9;
-		numerator = decimal * denominator;
+		numerator = decimal * denominator + 0.5;
 		reduce();
 		cout << "DoubleConstructor:\t" << this << endl;
 	}
@@ -346,7 +347,7 @@ void main()
 #endif // CONVERSIONS_FROM_OTHER_TO_CLASS
 
 #ifdef CONVERSIONS_HOME_WORK
-	Fraction A = (Fraction)2.75;
+	Fraction A = 2.75;
 	cout << A << endl;
 #endif // CONVERSIONS_HOME_WORK
 
