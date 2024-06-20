@@ -54,7 +54,7 @@ public:
 	explicit Fraction(double value)
 	{
 		integer = (int)value;
-		value -= integer;
+		value = value - integer;
 		denominator = 100;
 		numerator = value * denominator;
 		reduce ();
