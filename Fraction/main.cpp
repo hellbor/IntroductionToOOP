@@ -54,8 +54,8 @@ public:
 	explicit Fraction(double decimal)
 	{
 		integer = (int)decimal;
-		decimal = decimal - integer;
-		denominator = 100;
+		decimal -= integer;
+		denominator = 1e+9;
 		numerator = decimal * denominator;
 		reduce ();
 		cout << "SingleArgumentConstructor:\t" << this << endl;
