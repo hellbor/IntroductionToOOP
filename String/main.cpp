@@ -67,7 +67,7 @@ public:
 		this->size = other.size;
 		other.size = 0;
 		other.str = nullptr;
-		cout << "MoveAssignmentOperator:" << this << endl;
+		cout << "MoveAssignment:" << this << endl;
 	}
 	~String()
 	{
