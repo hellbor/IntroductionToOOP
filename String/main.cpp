@@ -49,16 +49,28 @@ public:
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
 		cout << "CopyConsructor:" << this << endl;
 	}
-	String(String&& other)noexcept	//r-value reference
-	{
-		//Shallow copy:
-		this->size = other.size;
-		this->str = other.str;	//Shallow copy
+	//String(String&& other)noexcept	//r-value reference
+	//{
+	//	//Shallow copy:
+	//	this->size = other.size;
+	//	this->str = other.str;	//Shallow copy
 
-		//Reset other:
-		other.size = 0;
-		other.str = nullptr;
-		cout << "MoveConstructor:" << this << endl;
+	//	//Reset other:
+	//	other.size = 0;
+	//	other.str = nullptr;
+	//	cout << "MoveConstructor:" << this << endl;
+	//}
+	String(String&& other)noexcept
+	{
+		if (&other != this)
+		{
+			delete str;
+			this->str = other.str;
+			this->size = other.size;
+			other.size = 0;
+			other.str = nullptr;
+		}
+		cout << "MoveAssignmentOperator:" << this << endl;
 	}
 	~String()
 	{
