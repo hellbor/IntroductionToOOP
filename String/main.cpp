@@ -62,14 +62,11 @@ public:
 	//}
 	String(String&& other)noexcept
 	{
-		if (&other != this)
-		{
-			delete str;
-			this->str = other.str;
-			this->size = other.size;
-			other.size = 0;
-			other.str = nullptr;
-		}
+		delete str;
+		this->str = other.str;
+		this->size = other.size;
+		other.size = 0;
+		other.str = nullptr;
 		cout << "MoveAssignmentOperator:" << this << endl;
 	}
 	~String()
