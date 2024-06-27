@@ -60,14 +60,13 @@ public:
 	//	other.str = nullptr;
 	//	cout << "MoveConstructor:" << this << endl;
 	//}
-	String(String&& other)noexcept
+	String(String&& move)noexcept
 	{
-		delete str;
-		this->str = other.str;
-		this->size = other.size;
-		other.size = 0;
-		other.str = nullptr;
-		cout << "MoveAssignment:" << this << endl;
+			this->size = move.size;
+			this->str = move.str;
+			move.size = 0;
+			move.str = nullptr;
+			cout << "MoveAssignment:" << this << endl;
 	}
 	~String()
 	{
