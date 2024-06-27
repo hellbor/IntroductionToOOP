@@ -39,7 +39,7 @@ public:
 		//и нам нужно добавить еще один байт для NULL-Terminator-a
 		this->str = new char[size] {};
 		for (int i = 0; i < size; i++)this->str[i] = str[i];
-		cout << "Constructor:\t" << this << endl;
+		cout << "Constructor:\t\t" << this << endl;
 	}
 	String(const String& other)
 	{
@@ -49,29 +49,21 @@ public:
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
 		cout << "CopyConsructor:" << this << endl;
 	}
-	//String(String&& other)noexcept	//r-value reference
-	//{
-	//	//Shallow copy:
-	//	this->size = other.size;
-	//	this->str = other.str;	//Shallow copy
-
-	//	//Reset other:
-	//	other.size = 0;
-	//	other.str = nullptr;
-	//	cout << "MoveConstructor:" << this << endl;
-	//}
-	String(String&& other)noexcept
+	String(String&& other)noexcept	//r-value reference
 	{
-			this->size = other.size;
-			this->str = other.str;
-			other.size = 0;
-			other.str = nullptr;
-			cout << "MoveAssignment:" << this << endl;
+		//Shallow copy:
+		this->size = other.size;
+		this->str = other.str;	//Shallow copy
+
+		//Reset other:
+		other.size = 0;
+		other.str = nullptr;
+		cout << "MoveConstructor:\t" << this << endl;
 	}
 	~String()
 	{
 		delete[] str;
-		cout << "Destructor:\t" << this << endl;
+		cout << "Destructor:\t\t" << this << endl;
 	}
 
 	//			Operators:
@@ -83,7 +75,18 @@ public:
 		this->size = other.size;
 		this->str = new char[size] {};
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
-		cout << "CopyAssignment:\t" << this << endl;
+		cout << "CopyAssignment:\t\t" << this << endl;
+		return *this;
+	}
+	String& operator=(String&& other)noexcept //r-value reference
+	{
+		if (this == &other)return *this;
+		delete[] this->str;
+		this->size = other.size;
+		this->str = other.str;
+		other.size = 0;
+		other.str = nullptr;
+		cout << "MoveAssignment:\t\t" << this << endl;
 		return *this;
 	}
 	const char& operator[](int i)const
@@ -119,7 +122,6 @@ String operator+(const String& left, const String& right)
 		//buffer.get_str()[i + left.get_size() - 1] = right.get_str()[i];
 	return buffer;
 }
-
 std::ostream& operator<<(std::ostream& os, const String& obj)
 {
 	return os << obj.get_str();
@@ -127,6 +129,7 @@ std::ostream& operator<<(std::ostream& os, const String& obj)
 
 //#define CONSTRUCTORS_CHECK
 #define OPERATOR_PLUS_CHECK
+
 
 void main()
 {
@@ -161,7 +164,9 @@ void main()
 	String str2 = "World";
 
 	cout << delimiter << endl;
-	String str3 = str1 + str2;
+	//String str3 = str1 + str2;
+	String str3;
+	str3 = str1 + str2;	//Move assignment
 	cout << str3 << endl;
 	cout << delimiter << endl;
 
