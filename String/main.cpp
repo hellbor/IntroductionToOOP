@@ -26,34 +26,34 @@ public:
 	}
 	
 	//			Constructors:
-	explicit String(int size = 80)
+	explicit String(int size = 80):size(size), str(new char[size]{})
 	{
-		this->size = size;
-		this->str = new char[size] {};
-		cout << "DefaultConstructor:\t" << this << endl;
+		//this->size = size;
+		//this->str = new char[size] {};
+		cout << "Constructor:\t" << this << endl;
 	}
-	String(const char str[])
+	String(const char str[]):size(strlen(str)+1), str(new char[size]{})
 	{
-		this->size = strlen(str) + 1;
+		//this->size = strlen(str) + 1;
 		//Функция strlen() возвращает размер строки в символах,
 		//и нам нужно добавить еще один байт для NULL-Terminator-a
-		this->str = new char[size] {};
+		//this->str = new char[size] {};
 		for (int i = 0; i < size; i++)this->str[i] = str[i];
-		cout << "Constructor:\t\t" << this << endl;
+		cout << "Constructor:\t" << this << endl;
 	}
-	String(const String& other)
+	String(const String& other):size(other.size), str(new char[size]{})
 	{
 		//Deep copy (Побитовое копирование):
-		this->size = other.size;
-		this->str = new char[size]{};
+		//this->size = other.size;
+		//this->str = new char[size]{};
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
 		cout << "CopyConsructor:" << this << endl;
 	}
-	String(String&& other)noexcept	//r-value reference
+	String(String&& other)noexcept:size(other.size),str(other.str)	//r-value reference
 	{
 		//Shallow copy:
-		this->size = other.size;
-		this->str = other.str;	//Shallow copy
+		//this->size = other.size;
+		//this->str = other.str;	//Shallow copy
 
 		//Reset other:
 		other.size = 0;
@@ -128,7 +128,8 @@ std::ostream& operator<<(std::ostream& os, const String& obj)
 }
 
 //#define CONSTRUCTORS_CHECK
-#define OPERATOR_PLUS_CHECK
+//#define OPERATOR_PLUS_CHECK
+#define CALLING_CONSTRUCTORS
 
 
 void main()
@@ -173,5 +174,33 @@ void main()
 	cout << str1 << endl;
 	cout << str2 << endl;
 #endif // OPERATOR_PLUS_CHECK
+
+#ifdef CALLING_CONSTRUCTORS
+	String str1;	//Default constructor
+	str1.print();
+
+	//Single argument constructor 'int'
+	//String str2 = 8;	//explicit constructor так вызвать невозможно
+	String str2(8);		//explicit constructor можно вызвать только так
+	str2.print();
+
+	String str3 = "Hello";	//Single-Argument constructor 'char'
+	str3.print();
+
+	String str4();	//Здесь НЕ вызывается никакой конструктор, и не создается объект
+					//здесь объявляется функция str4(), которая не принимает никаких параметров
+					// и возвращает значение типа 'String'
+					//т.е., таким образом DefaultConstructor вызвать невозможно
+	//str4.print();
+	//Если нужно вызвать DefaultConstructor, это делается следующим образом:
+	String str5{};	//Явный вызов конструктора по умолчанию
+	str5.print();
+
+	//String str6 = str3;	//CopyConstructor
+	// String str6(str3);	//CopyConstructor
+	String str6{ str3 };	//CopyConstructor
+	str6.print();
+	//Следовательно, абсолютно любой конструктор можно вызвать при помощи () и {}
+#endif // CALLING_CONSTRUCTORS
 
 }
