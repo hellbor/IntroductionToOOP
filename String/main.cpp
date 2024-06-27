@@ -32,7 +32,7 @@ public:
 		//this->str = new char[size] {};
 		cout << "Constructor:\t" << this << endl;
 	}
-	String(const char str[]):size(strlen(str)+1), str(new char[size]{})
+	String(const char str[]):String(strlen(str) + 1)
 	{
 		//this->size = strlen(str) + 1;
 		//Функция strlen() возвращает размер строки в символах,
@@ -41,13 +41,13 @@ public:
 		for (int i = 0; i < size; i++)this->str[i] = str[i];
 		cout << "Constructor:\t" << this << endl;
 	}
-	String(const String& other):size(other.size), str(new char[size]{})
+	String(const String& other):String(other.str)
 	{
 		//Deep copy (Побитовое копирование):
 		//this->size = other.size;
 		//this->str = new char[size]{};
-		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
-		cout << "CopyConsructor:" << this << endl;
+		//for (int i = 0; i < size; i++)this->str[i] = other.str[i];
+		cout << "CopyConsructor:\t" << this << endl;
 	}
 	String(String&& other)noexcept:size(other.size),str(other.str)	//r-value reference
 	{
