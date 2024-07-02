@@ -1,9 +1,9 @@
-#include"String.h"
+ï»¿#include"String.h"
 
 /// -------------------------------------------------///
 
 /////////////////////////////////////////////////////////////////////////
-//////////		Îïðåäåëåíèå êëàññà (Class definition)		////////////
+//////////		ÐžÐ¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½Ð¸Ðµ ÐºÐ»Ð°ÑÑÐ° (Class definition)		////////////
 int String::get_size()const
 {
 	return size;
@@ -28,15 +28,15 @@ String::String(int size) :size(size), str(new char[size] {})
 String::String(const char str[]) :String(strlen(str) + 1)
 {
 	//this->size = strlen(str) + 1;
-	//Ôóíêöèÿ strlen() âîçâðàùàåò ðàçìåð ñòðîêè â ñèìâîëàõ,
-	//è íàì íóæíî äîáàâèòü åùå îäèí áàéò äëÿ NULL-Terminator-a
+	//Ð¤ÑƒÐ½ÐºÑ†Ð¸Ñ strlen() Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÑ‚ Ñ€Ð°Ð·Ð¼ÐµÑ€ ÑÑ‚Ñ€Ð¾ÐºÐ¸ Ð² ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°Ñ…,
+	//Ð¸ Ð½Ð°Ð¼ Ð½ÑƒÐ¶Ð½Ð¾ Ð´Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ ÐµÑ‰Ðµ Ð¾Ð´Ð¸Ð½ Ð±Ð°Ð¹Ñ‚ Ð´Ð»Ñ NULL-Terminator-a
 	//this->str = new char[size] {};
 	for (int i = 0; i < size; i++)this->str[i] = str[i];
 	cout << "Constructor:\t" << this << endl;
 }
 String::String(const String& other) :String(other.str)
 {
-	//Deep copy (Ïîáèòîâîå êîïèðîâàíèå):
+	//Deep copy (ÐŸÐ¾Ð±Ð¸Ñ‚Ð¾Ð²Ð¾Ðµ ÐºÐ¾Ð¿Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ):
 	//this->size = other.size;
 	//this->str = new char[size]{};
 	//for (int i = 0; i < size; i++)this->str[i] = other.str[i];
@@ -62,7 +62,7 @@ String::~String()
 //			Operators:
 String& String::operator=(const String& other)
 {
-	//Deep copy (Ïîáèòîâîå êîïèðîâàíèå):
+	//Deep copy (ÐŸÐ¾Ð±Ð¸Ñ‚Ð¾Ð²Ð¾Ðµ ÐºÐ¾Ð¿Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ):
 	if (this == &other)return *this;
 	delete[] this->str;
 	this->size = other.size;
@@ -120,5 +120,5 @@ std::ostream& operator<<(std::ostream& os, const String& obj)
 	return os << obj.get_str();
 }
 
-//////////		Êîíåö îïðåäåëåíèå êëàññà (Class definition end)		/////
+//////////		ÐšÐ¾Ð½ÐµÑ† Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½Ð¸Ðµ ÐºÐ»Ð°ÑÑÐ° (Class definition end)		/////
 /////////////////////////////////////////////////////////////////////////
